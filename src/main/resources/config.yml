@@ -1,0 +1,20 @@
+#Spawnpoint of Catch me if you can
+seekerspawn:
+  x:
+  y:
+  z:
+
+hiderspawn:
+  x:
+  y:
+  z:
+
+spectatorspawn:
+  x:
+  y:
+  z:
+
+lobby:
+  x:
+  y:
+  z:

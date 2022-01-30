@@ -1,0 +1,8 @@
+name: CatchMeIfYouCan
+version: '${project.version}'
+main: com.blub.catchmeifyoucan.Catchmeifyoucan
+api-version: 1.18
+authors: [ Blub ]
+description: an hide and seek plugin where one hider wins the game
+commands:
+  catch:
