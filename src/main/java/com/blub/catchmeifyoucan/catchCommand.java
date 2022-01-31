@@ -6,12 +6,16 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class catchCommand implements CommandExecutor {
 
@@ -37,11 +41,11 @@ public class catchCommand implements CommandExecutor {
                             double sx = catchmeifyoucan.getConfig().getDouble("seekerspawn.x");
                             double sy = catchmeifyoucan.getConfig().getDouble("seekerspawn.y");
                             double sz = catchmeifyoucan.getConfig().getDouble("seekerspawn.z");
-                            Location seekerspawn = new Location(Bukkit.getWorld("hideandseek-city"), sx, sy, sz, 0, 0);
+                            Location seekerspawn = new Location(Bukkit.getWorld("world"), sx, sy, sz, 0, 0);
                             double hx = catchmeifyoucan.getConfig().getDouble("hiderspawn.x");
                             double hy = catchmeifyoucan.getConfig().getDouble("hiderspawn.y");
                             double hz = catchmeifyoucan.getConfig().getDouble("hiderspawn.z");
-                            Location hiderspawn = new Location(Bukkit.getWorld("hideandseek-city"), hx, hy, hz, 0, 0);
+                            Location hiderspawn = new Location(Bukkit.getWorld("world"), hx, hy, hz, 0, 0);
                             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                                 if (catchmeifyoucan.getSeekerList().contains(onlinePlayer.getUniqueId())) {
                                     onlinePlayer.teleport(seekerspawn);
@@ -50,6 +54,7 @@ public class catchCommand implements CommandExecutor {
                                     //give the seeker potioneffects
                                     onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 900 ,10, false, true));
                                     onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 900 ,100, false, true));
+                                    onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999 ,1, false, false));
                                     //set the seeker inventory
                                     onlinePlayer.getInventory().clear();
                                     onlinePlayer.getInventory().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
@@ -63,20 +68,57 @@ public class catchCommand implements CommandExecutor {
                                     onlinePlayer.sendMessage(ChatColor.GREEN + "The game has been started, go and do not get caught, you have 45 seconds to hide!");
                                     onlinePlayer.setGameMode(GameMode.ADVENTURE);
                                     onlinePlayer.getInventory().clear();
-                                    ItemStack item = new ItemStack(Material.LEGACY_SKULL, 1 , (short) 3);
-                                    SkullMeta meta = (SkullMeta) item.getItemMeta();
-                                    meta.setOwner(onlinePlayer.getDisplayName());
-                                    item.setItemMeta(meta);
-                                    onlinePlayer.getInventory().setChestplate(new ItemStack(Material.LEATHER_CHESTPLATE));
-                                    onlinePlayer.getInventory().setLeggings(new ItemStack(Material.LEATHER_LEGGINGS));
-                                    onlinePlayer.getInventory().setBoots(new ItemStack(Material.LEATHER_BOOTS));
-                                    onlinePlayer.getInventory().setHelmet(item);
+                                    ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
+                                    ItemStack leg = new ItemStack(Material.LEATHER_LEGGINGS);
+                                    ItemStack feet = new ItemStack(Material.LEATHER_BOOTS);
+                                    LeatherArmorMeta meta = (LeatherArmorMeta) chest.getItemMeta();
+                                    meta.setColor(Color.ORANGE);
+                                    int i = ThreadLocalRandom.current().nextInt(0, 9);
+                                    if (i == 0){
+                                        meta.setColor(Color.TEAL);
+                                    } else if (i == 1){
+                                        meta.setColor(Color.PURPLE);
+                                    } else if (i == 2){
+                                        meta.setColor(Color.GREEN);
+                                    } else if (i == 3){
+                                        meta.setColor(Color.RED);
+                                    } else if (i == 4){
+                                        meta.setColor(Color.OLIVE);
+                                    } else if (i == 5){
+                                        meta.setColor(Color.MAROON);
+                                    } else if (i == 6){
+                                        meta.setColor(Color.LIME);
+                                    } else if (i == 7){
+                                        meta.setColor(Color.AQUA);
+                                    } else if (i == 8){
+                                        meta.setColor(Color.BLUE);
+                                    } else if (i==9) {
+                                        meta.setColor(Color.WHITE);
+                                    }
+                                    if (onlinePlayer.getDisplayName().equalsIgnoreCase("Ja90n")){
+                                        meta.setColor(Color.fromRGB(255,124,166));
+                                    } else if (onlinePlayer.getDisplayName().equalsIgnoreCase("RexGamesYT")) {
+                                        meta.setColor(Color.fromRGB(244, 5, 14));
+                                    } else if (onlinePlayer.getDisplayName().equalsIgnoreCase("KabouterTeun08")) {
+                                        meta.setColor(Color.fromRGB(28, 201, 71));
+                                    } else if (onlinePlayer.getDisplayName().equalsIgnoreCase("UnknownGames07")) {
+                                        meta.setColor(Color.fromRGB(85,52,43));
+                                    } else if (onlinePlayer.getDisplayName().equalsIgnoreCase("RUSHGAMES08")) {
+                                        meta.setColor(Color.fromRGB(0,255,227));
+                                    }
+                                    chest.setItemMeta(meta);
+                                    leg.setItemMeta(meta);
+                                    feet.setItemMeta(meta);
+                                    onlinePlayer.getInventory().setChestplate(chest);
+                                    onlinePlayer.getInventory().setLeggings(leg);
+                                    onlinePlayer.getInventory().setBoots(feet);
+                                    onlinePlayer.getInventory().setHelmet(new ItemStack(Material.PLAYER_HEAD));
                                     onlinePlayer.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999999 , 1, false, false));
                                 } else if (catchmeifyoucan.getSpectatorList().contains(onlinePlayer.getUniqueId())){
                                     double spx = catchmeifyoucan.getConfig().getDouble("spectatorspawn.x");
                                     double spy = catchmeifyoucan.getConfig().getDouble("spectatorspawn.y");
                                     double spz = catchmeifyoucan.getConfig().getDouble("spectatorspawn.z");
-                                    Location spectatorspawn = new Location(Bukkit.getWorld("hideandseek-city"), spx, spy, spz, 0, 0);
+                                    Location spectatorspawn = new Location(p.getWorld(), spx, spy, spz, 0, 0);
                                     onlinePlayer.teleport(spectatorspawn);
                                     onlinePlayer.setGameMode(GameMode.ADVENTURE);
                                     onlinePlayer.setFlying(true);
@@ -99,18 +141,21 @@ public class catchCommand implements CommandExecutor {
                         p.sendMessage(ChatColor.RED + "The game is still active");
                     }
                 } else if (args[0].equalsIgnoreCase("stop")) {
-                    if (catchmeifyoucan.getIsGame()){
+                    catchmeifyoucan.getHiderList().remove(p.getUniqueId());
+                    catchmeifyoucan.getSpectatorList().add(p.getUniqueId());
+                    if (catchmeifyoucan.getHiderList().size() == 1){
                         Player winner = Bukkit.getPlayer(catchmeifyoucan.getHiderList().get(0));
                         double sx = catchmeifyoucan.getConfig().getDouble("lobby.x");
                         double sy = catchmeifyoucan.getConfig().getDouble("lobby.y");
                         double sz = catchmeifyoucan.getConfig().getDouble("lobby.z");
-                        Location lobby = new Location(p.getWorld(), sx, sy, sz, 0, 0);
+                        Location lobby = new Location(Bukkit.getWorld("world"), sx, sy, sz, 0, 0);
                         for (Player target : Bukkit.getOnlinePlayers()){
-                            target.sendMessage(ChatColor.RED + "The game has been stopped!");
+                            target.sendMessage(winner.getDisplayName() + ChatColor.BLUE + " has won the game!");
                             target.removePotionEffect(PotionEffectType.INVISIBILITY);
+                            target.removePotionEffect(PotionEffectType.SPEED);
+                            target.setAllowFlight(false);
+                            target.setFlying(false);
                             if (catchmeifyoucan.getSpectatorList().contains(target.getUniqueId())){
-                                target.setFlying(false);
-                                target.setAllowFlight(false);
                                 for (Player target2 : Bukkit.getOnlinePlayers()){
                                     target2.showPlayer(target);
                                 }
