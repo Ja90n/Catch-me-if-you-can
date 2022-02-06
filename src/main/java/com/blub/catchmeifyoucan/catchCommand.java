@@ -6,15 +6,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.checkerframework.checker.units.qual.C;
 
-import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class catchCommand implements CommandExecutor {
@@ -123,6 +118,7 @@ public class catchCommand implements CommandExecutor {
                                     onlinePlayer.setGameMode(GameMode.ADVENTURE);
                                     onlinePlayer.setFlying(true);
                                     onlinePlayer.setAllowFlight(true);
+                                    onlinePlayer.getInventory().setItemInMainHand(new ItemStack(Material.COMPASS));
                                     for (Player target : Bukkit.getOnlinePlayers()){
                                         if (!catchmeifyoucan.getSpectatorList().contains(target.getUniqueId())){
                                             if (catchmeifyoucan.getSeekerList().contains(target.getUniqueId())){
