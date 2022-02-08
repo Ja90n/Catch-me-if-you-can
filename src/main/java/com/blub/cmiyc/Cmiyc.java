@@ -32,6 +32,7 @@ public final class Cmiyc extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new gamemenuGuiEvent(this), this);
         getServer().getPluginManager().registerEvents(new onDeathandRespawnEvents(this),this);
         getServer().getPluginManager().registerEvents(new miscellaneousEvents(this),this);
+        getServer().getPluginManager().registerEvents(new spectatorCompasEvent(this),this);
 
         //Command
         getCommand("catch").setExecutor(new cmiycCommands(this));

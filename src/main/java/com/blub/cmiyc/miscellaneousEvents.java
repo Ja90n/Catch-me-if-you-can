@@ -79,8 +79,6 @@ public class miscellaneousEvents implements Listener {
                     entity.setVelocity(p.getLocation().getDirection().multiply(2).setY(2));
                 }
             }
-        } else if (cmiyc.getSpectatorplayers().contains(p.getUniqueId())){
-            e.setCancelled(true);
         }
     }
 
