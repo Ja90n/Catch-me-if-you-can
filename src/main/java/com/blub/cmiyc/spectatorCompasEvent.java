@@ -82,7 +82,13 @@ public class spectatorCompasEvent implements Listener {
         if (e.getView().getTitle().equals(ChatColor.LIGHT_PURPLE.toString() + ChatColor.ITALIC + "Spectator Compass")){
             e.setCancelled(true);
             if (!e.getCurrentItem().equals(new ItemStack (Material.PINK_STAINED_GLASS_PANE))){
-
+                for (Player target : Bukkit.getOnlinePlayers()){
+                    if (e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.RED + target.getDisplayName())){
+                        e.getWhoClicked().teleport(target);
+                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.BLUE + target.getDisplayName())){
+                        e.getWhoClicked().teleport(target);
+                    } 
+                }
             }
         }
     }
