@@ -81,13 +81,16 @@ public class spectatorCompasEvent implements Listener {
     public void onInventoyClick(InventoryClickEvent e){
         if (e.getView().getTitle().equals(ChatColor.LIGHT_PURPLE.toString() + ChatColor.ITALIC + "Spectator Compass")){
             e.setCancelled(true);
-            if (!e.getCurrentItem().equals(new ItemStack (Material.PINK_STAINED_GLASS_PANE))){
+            if (e.getCurrentItem().equals(new ItemStack (Material.PLAYER_HEAD))){
                 for (Player target : Bukkit.getOnlinePlayers()){
                     if (e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.RED + target.getDisplayName())){
                         e.getWhoClicked().teleport(target);
+                        e.getWhoClicked().sendMessage(ChatColor.BLUE + "YOu have been teleported to " + ChatColor.RED.toString() + ChatColor.BOLD + target.getDisplayName());
                     } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.BLUE + target.getDisplayName())){
                         e.getWhoClicked().teleport(target);
-                    } 
+                        e.getWhoClicked().sendMessage(ChatColor.BLUE + "YOu have been teleported to " + ChatColor.GREEN.toString() + ChatColor.BOLD + target.getDisplayName());
+                    }
+                    e.getWhoClicked().closeInventory();
                 }
             }
         }
