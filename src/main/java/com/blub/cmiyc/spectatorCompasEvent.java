@@ -86,7 +86,7 @@ public class spectatorCompasEvent implements Listener {
                     if (e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.RED + target.getDisplayName())){
                         e.getWhoClicked().teleport(target);
                         e.getWhoClicked().sendMessage(ChatColor.BLUE + "YOu have been teleported to " + ChatColor.RED.toString() + ChatColor.BOLD + target.getDisplayName());
-                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.BLUE + target.getDisplayName())){
+                    } else if (e.getCurrentItem().getItemMeta().getDisplayName().equals(ChatColor.GREEN + target.getDisplayName())){
                         e.getWhoClicked().teleport(target);
                         e.getWhoClicked().sendMessage(ChatColor.BLUE + "YOu have been teleported to " + ChatColor.GREEN.toString() + ChatColor.BOLD + target.getDisplayName());
                     }
