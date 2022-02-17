@@ -428,7 +428,7 @@ public class gamemenuGuiEvent implements Listener {
                 }
 
                 p.openInventory(maingui);
-            } else if (e.getSlot() == 24) {
+            } else if (e.getSlot() == 22) {
                 p.closeInventory();
                 Inventory playerList = Bukkit.createInventory(p, 45, ChatColor.LIGHT_PURPLE.toString() + ChatColor.ITALIC + "Player list");
 
@@ -509,6 +509,7 @@ public class gamemenuGuiEvent implements Listener {
                         playerList.setItem(24, spectatorplayers);
                     }
                 }
+                p.openInventory(playerList);
             }
         } else if (e.getView().getTitle().equals(ChatColor.LIGHT_PURPLE.toString() + ChatColor.ITALIC + "Player list")) {
             e.setCancelled(true);
