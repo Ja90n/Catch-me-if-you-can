@@ -1,7 +1,6 @@
-name: CatchMeIfYouCan
+name: Catch-Me-If-You-Can
 version: '${project.version}'
-main: com.blub.cmiyc.Cmiyc
-api-version: 1.18
-authors: [ Blub ]
+main: com.ja90n.catchmeifyoucan.CatchMeIfYouCan
+api-version: 1.19
 commands:
-  catch:
+  cmiyc:

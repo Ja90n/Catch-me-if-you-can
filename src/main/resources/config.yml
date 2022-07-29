@@ -1,22 +1,29 @@
-#Spawnpoint of Catch me if you can
-seekerspawn:
-  x: -302.5
-  y: -12
-  z: 90
+required-players: 2
+seeker-wait-time: 10
+countdown-time: 15
+match-time: 300
 
-hiderspawn:
-  x: -302.5
-  y: -12
-  z: 83
-
-spectatorspawn:
-  x: -302.5
-  y: -12
-  z: 83
-
-lobby:
-  x: 0.5
-  y: 1
-  z: 0.5
-
-world: 'world'
+arenas:
+  0:
+    name: 'skeld'
+    lobby-spawn:
+      world: 'skeld'
+      x: 28.0
+      y: 18.0
+      z: 109.0
+      yaw: 0.0
+      pitch: 0.0
+    hider-spawn:
+      world: 'skeld'
+      x: 28.0
+      y: 18.0
+      z: 109.0
+      yaw: 0.0
+      pitch: 0.0
+    seeker-spawn:
+      world: 'skeld'
+      x: 28.0
+      y: 18.0
+      z: 109.0
+      yaw: 0.0
+      pitch: 0.0
