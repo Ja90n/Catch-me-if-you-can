@@ -22,7 +22,6 @@ public class Arena {
     private Game game;
     private GameState gameState;
     private StartCountdownRunnable startCountdownRunnable;
-    private RunnerWinCountdownRunnable runnerWinCountdownRunnable;
 
     public Arena(CatchMeIfYouCan catchMeIfYouCan, int id, String name) {
         this.catchMeIfYouCan = catchMeIfYouCan;
@@ -31,7 +30,6 @@ public class Arena {
         this.game = new Game(catchMeIfYouCan,this);
         this.gameState = GameState.RECRUITING;
         this.startCountdownRunnable = new StartCountdownRunnable(catchMeIfYouCan,this);
-        this.runnerWinCountdownRunnable = new RunnerWinCountdownRunnable(catchMeIfYouCan,this);
 
         players = new ArrayList<>();
     }
@@ -55,7 +53,7 @@ public class Arena {
                 player.removePotionEffect(PotionEffectType.INVISIBILITY);
             }
             game.getShowHidersRunnable().cancel();
-            runnerWinCountdownRunnable.cancel();
+            game.ResetRunnerWinCountdownRunnable();
             players.clear();
         }
         sendTitle(" ", " ");
@@ -156,10 +154,6 @@ public class Arena {
     public String getName() {return name;}
 
     public World getWorld(){ return catchMeIfYouCan.getConfigManager().getHiderSpawn(id).getWorld();}
-
-    public RunnerWinCountdownRunnable getRunnerWinCountdownRunnable() {
-        return runnerWinCountdownRunnable;
-    }
 
     // Setters
     public void setGameState(GameState gameState) {

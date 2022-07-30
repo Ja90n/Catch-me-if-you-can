@@ -2,6 +2,7 @@ package com.ja90n.catchmeifyoucan.instances;
 
 import com.ja90n.catchmeifyoucan.CatchMeIfYouCan;
 import com.ja90n.catchmeifyoucan.GameState;
+import com.ja90n.catchmeifyoucan.runnables.RunnerWinCountdownRunnable;
 import com.ja90n.catchmeifyoucan.runnables.SeekerStartCountdownRunnable;
 import com.ja90n.catchmeifyoucan.runnables.ShowHidersRunnable;
 import com.ja90n.catchmeifyoucan.utils.SetupPlayerUtil;
@@ -23,11 +24,13 @@ public class Game {
     private HashMap<UUID,String> teams;
     private List<UUID> seekerCountdown;
     private ShowHidersRunnable showHidersRunnable;
+    private RunnerWinCountdownRunnable runnerWinCountdownRunnable;
 
     public Game(CatchMeIfYouCan catchMeIfYouCan, Arena arena){
-        showHidersRunnable = new ShowHidersRunnable(catchMeIfYouCan,arena);
         this.catchMeIfYouCan = catchMeIfYouCan;
         this.arena = arena;
+        this.runnerWinCountdownRunnable = new RunnerWinCountdownRunnable(catchMeIfYouCan,arena);
+        this.showHidersRunnable = new ShowHidersRunnable(catchMeIfYouCan,arena);
         seekerCountdown = new ArrayList<>();
         teams = new HashMap<>();
     }
@@ -55,7 +58,7 @@ public class Game {
         arena.getWorld().setTime(0);
         arena.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         arena.getWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
-        arena.getRunnerWinCountdownRunnable().start();
+        runnerWinCountdownRunnable.start();
         arena.setGameState(GameState.LIVE);
     }
 
@@ -93,6 +96,15 @@ public class Game {
             }
         }
         return hiders;
+    }
+
+    public RunnerWinCountdownRunnable getRunnerWinCountdownRunnable() {
+        return runnerWinCountdownRunnable;
+    }
+
+    public void ResetRunnerWinCountdownRunnable(){
+        runnerWinCountdownRunnable.cancel();
+        runnerWinCountdownRunnable = new RunnerWinCountdownRunnable(catchMeIfYouCan,arena);
     }
 
     public ShowHidersRunnable getShowHidersRunnable() {

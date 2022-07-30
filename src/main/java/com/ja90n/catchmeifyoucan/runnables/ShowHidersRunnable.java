@@ -18,6 +18,9 @@ public class ShowHidersRunnable extends BukkitRunnable {
     public ShowHidersRunnable(CatchMeIfYouCan catchMeIfYouCan, Arena arena){
         this.catchMeIfYouCan = catchMeIfYouCan;
         this.arena = arena;
+    }
+
+    public void start(){
         runTaskTimer(catchMeIfYouCan,600,600);
     }
 

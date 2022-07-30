@@ -27,9 +27,8 @@ public class StartCountdownRunnable extends BukkitRunnable {
     @Override
     public void run() {
         if (countdownTime == 0){
-            cancel();
             arena.startGame();
-            return;
+            cancel();
         }
         if (countdownTime <= 10 || countdownTime % 15 == 0){
             arena.sendMessage(ChatColor.BLUE + "Game will start in " + ChatColor.WHITE + countdownTime + ChatColor.BLUE + " second" + (countdownTime == 1 ? "" : "s") + ".");

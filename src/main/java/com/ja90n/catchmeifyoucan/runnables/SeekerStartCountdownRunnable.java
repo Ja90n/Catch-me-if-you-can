@@ -36,6 +36,7 @@ public class SeekerStartCountdownRunnable extends BukkitRunnable {
             player.teleport(catchMeIfYouCan.getConfigManager().getSeekerSpawn(arena.getId()));
             arena.sendMessage(ChatColor.RED + "The Catcher has been released!");
             arena.getGame().toggleRunnableCheck(player,false);
+            arena.getGame().getShowHidersRunnable().start();
             cancel();
         }
         player.sendTitle( ChatColor.BLUE + "You will be released in " + ChatColor.WHITE + countdownSeconds + ChatColor.BLUE + " second" + (countdownSeconds == 1 ? "" : "s") + "."," ");

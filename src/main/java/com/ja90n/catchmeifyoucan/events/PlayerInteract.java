@@ -43,7 +43,7 @@ public class PlayerInteract implements Listener {
         Player player = event.getPlayer();
         if (catchMeIfYouCan.getArenaManager().getArena(player) != null){
             Arena arena = catchMeIfYouCan.getArenaManager().getArena(player);
-            if (player.getPassengers().get(0) != null){
+            if (!player.getPassengers().isEmpty()){
                 Entity entity = player.getPassengers().get(0);
                 player.removePassenger(entity);
                 entity.setVelocity(player.getLocation().getDirection().multiply(2).setY(1.5));
