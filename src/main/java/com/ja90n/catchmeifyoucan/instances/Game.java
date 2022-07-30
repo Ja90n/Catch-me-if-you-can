@@ -45,9 +45,9 @@ public class Game {
                 teams.put(uuid,"hider");
                 new SetupPlayerUtil(player,"hider");
                 player.teleport(catchMeIfYouCan.getConfigManager().getHiderSpawn(arena.getId()));
-                player.sendMessage(ChatColor.BLUE + "You are a hider!");
-                player.sendMessage(ChatColor.BLUE + "Game has been started! You have " + catchMeIfYouCan.getConfigManager().getSeekerWaitTime()  + " seconds to find a spot!");
-                player.sendTitle(ChatColor.BLUE + "Game has been started!", ChatColor.GRAY + "You have " + catchMeIfYouCan.getConfigManager().getSeekerWaitTime()  + " seconds to find a spot!");
+                player.sendMessage(ChatColor.BLUE + "You are a runner!");
+                player.sendMessage(ChatColor.BLUE + "Game has been started! You have " + catchMeIfYouCan.getConfigManager().getSeekerWaitTime()  + " seconds to run away!");
+                player.sendTitle(ChatColor.BLUE + "Game has been started!", ChatColor.GRAY + "You have " + catchMeIfYouCan.getConfigManager().getSeekerWaitTime()  + " seconds to run away!");
             }
             player.setHealth(20);
             player.setGameMode(GameMode.ADVENTURE);

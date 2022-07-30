@@ -21,7 +21,7 @@ public class SeekerStartCountdownRunnable extends BukkitRunnable {
         this.catchMeIfYouCan = catchMeIfYouCan;
         this.countdownSeconds = catchMeIfYouCan.getConfigManager().getSeekerWaitTime();
         player.teleport(catchMeIfYouCan.getConfigManager().getSeekerSpawn(arena.getId()));
-        player.sendMessage(ChatColor.LIGHT_PURPLE + "You are a seeker!");
+        player.sendMessage(ChatColor.LIGHT_PURPLE + "You are a Catcher!");
         player.sendMessage(ChatColor.LIGHT_PURPLE + "Game has been started! You have to wait " + catchMeIfYouCan.getConfigManager().getSeekerWaitTime() + " seconds to be released!");
         player.sendTitle(ChatColor.LIGHT_PURPLE + "Game has been started!", ChatColor.GRAY + "You have to wait " + catchMeIfYouCan.getConfigManager().getSeekerWaitTime() + " seconds to be released!");
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,20 * catchMeIfYouCan.getConfigManager().getSeekerWaitTime(),10,false,false));
@@ -32,15 +32,15 @@ public class SeekerStartCountdownRunnable extends BukkitRunnable {
     @Override
     public void run() {
         if (countdownSeconds == 0){
-            player.sendTitle(ChatColor.BOLD.toString() + ChatColor.BLUE + "You got released!" , ChatColor.GRAY + "Good luck with hunting down the hiders!");
+            player.sendTitle(ChatColor.BOLD.toString() + ChatColor.BLUE + "You got released!" , ChatColor.GRAY + "Good luck with catching the runners!");
             player.teleport(catchMeIfYouCan.getConfigManager().getSeekerSpawn(arena.getId()));
-            arena.sendMessage(ChatColor.RED + "Seeker has been released!");
+            arena.sendMessage(ChatColor.RED + "The Catcher has been released!");
             arena.getGame().toggleRunnableCheck(player,false);
             cancel();
         }
-        player.sendTitle( ChatColor.RED + "You will get released in " + ChatColor.WHITE + countdownSeconds,  " seconds");
+        player.sendTitle( ChatColor.BLUE + "You will be released in " + ChatColor.WHITE + countdownSeconds + ChatColor.BLUE + " second" + (countdownSeconds == 1 ? "" : "s") + "."," ");
         if (countdownSeconds <= 10 || countdownSeconds % 15 == 0){
-            arena.sendMessage(ChatColor.BLUE + "Hunter will be released in " + countdownSeconds + " second" + (countdownSeconds == 1 ? "" : "s") + ".");
+            arena.sendMessage(ChatColor.RED + "The Catcher will be released in " + countdownSeconds + " second" + (countdownSeconds == 1 ? "" : "s") + ".");
         }
         countdownSeconds--;
     }

@@ -24,11 +24,12 @@ public class ShowHidersRunnable extends BukkitRunnable {
     @Override
     public void run() {
         for (UUID uuid : arena.getGame().getHiders()){
-            Bukkit.getPlayer(uuid).addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,100,5,false,false));
+            Bukkit.getPlayer(uuid).addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,100,0,false,false));
+            Bukkit.getPlayer(uuid).addPotionEffect(new PotionEffect(PotionEffectType.SPEED,100,0,false,false));
             Bukkit.getPlayer(uuid).sendMessage(ChatColor.RED + "You are now glowing for the next 5 seconds");
         }
         for (UUID uuid : arena.getGame().getSeekers()){
-            Bukkit.getPlayer(uuid).sendMessage(ChatColor.BLUE + "All hiders are now glowing for 5 seconds");
+            Bukkit.getPlayer(uuid).sendMessage(ChatColor.BLUE + "All runners are now glowing for 5 seconds");
         }
     }
 }

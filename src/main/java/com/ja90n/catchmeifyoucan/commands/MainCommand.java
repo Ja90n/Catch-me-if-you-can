@@ -72,14 +72,6 @@ public class MainCommand implements CommandExecutor {
                                 }
                             }
                             break;
-                        case "spawnpoint":
-                            if (catchMeIfYouCan.getArenaManager().getArena(player) != null){
-                                player.sendMessage("Location:");
-                                player.sendMessage("X: " + catchMeIfYouCan.getConfig().getDouble("arenas." + catchMeIfYouCan.getArenaManager().getArena(player).getId() + "lobby-spawn.x"));
-                                player.sendMessage("Y: " + catchMeIfYouCan.getConfig().getDouble("arenas." + catchMeIfYouCan.getArenaManager().getArena(player).getId() + "lobby-spawn.y"));
-                                player.sendMessage("Z: " + catchMeIfYouCan.getConfig().getDouble("arenas." + catchMeIfYouCan.getArenaManager().getArena(player).getId() + "lobby-spawn.Z"));
-                            }
-                            break;
                         default:
                             helpCommand(player);
                             break;

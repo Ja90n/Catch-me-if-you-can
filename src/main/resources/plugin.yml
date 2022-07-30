@@ -4,3 +4,4 @@ main: com.ja90n.catchmeifyoucan.CatchMeIfYouCan
 api-version: 1.19
 commands:
   cmiyc:
+  catch:

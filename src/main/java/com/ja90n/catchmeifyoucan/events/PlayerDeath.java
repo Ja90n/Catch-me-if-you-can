@@ -31,7 +31,7 @@ public class PlayerDeath implements Listener {
             Arena arena = catchMeIfYouCan.getArenaManager().getArena(player);
             if (arena.getGameState().equals(GameState.LIVE)) {
                 if (arena.getGame().getTeams().get(player.getUniqueId()).equals("seeker")){
-                    event.setDeathMessage(ChatColor.RED + "Seeker " + player.getDisplayName() + " has died!");
+                    event.setDeathMessage(ChatColor.RED + "Catcher " + player.getDisplayName() + " has died!");
                 } else if (arena.getGame().getTeams().get(player.getUniqueId()).equals("hider")) {
                     arena.getGame().getTeams().remove(player.getUniqueId());
                     arena.getGame().getTeams().put(player.getUniqueId(),"spectator");
@@ -42,14 +42,14 @@ public class PlayerDeath implements Listener {
                         }
                     }
                     if (hinderAmount <= 0){
-                        arena.sendMessage(ChatColor.BLUE + "The catchers has won the game!");
-                        arena.sendTitle(ChatColor.BLUE + "The catchers has won the game!",ChatColor.GRAY + "Thank you for playing!");
+                        arena.sendMessage(ChatColor.DARK_RED + "The catchers has won the game!");
+                        arena.sendTitle(ChatColor.DARK_RED + "The catchers has won the game!",ChatColor.GRAY + "Thank you for playing!");
                         arena.stopGame();
                     } else {
                         if (player.getKiller() == null){
-                            event.setDeathMessage(ChatColor.BLUE + "Hider " + ChatColor.WHITE + player.getDisplayName() + ChatColor.BLUE + " has died!");
+                            event.setDeathMessage(ChatColor.BLUE + "Runner " + ChatColor.WHITE + player.getDisplayName() + ChatColor.BLUE + " has died!");
                         } else {
-                            event.setDeathMessage(ChatColor.BLUE + "Hider " + ChatColor.WHITE + player.getDisplayName() + ChatColor.BLUE + " was killed by " + ChatColor.WHITE + player.getKiller().getDisplayName() + ChatColor.BLUE + "!");
+                            event.setDeathMessage(ChatColor.BLUE + "Runner " + ChatColor.WHITE + player.getDisplayName() + ChatColor.BLUE + " was killed by " + ChatColor.WHITE + player.getKiller().getDisplayName() + ChatColor.BLUE + "!");
                         }
                     }
                 }

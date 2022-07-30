@@ -29,7 +29,13 @@ public class RunnerWinCountdownRunnable extends BukkitRunnable {
             arena.stopGame();
             cancel();
         }
-        if (countdownTime <= 10 || countdownTime % 15 == 0){
+        if (countdownTime % 60 == 0){
+            arena.sendMessage(ChatColor.BLUE + "Runners will win in " + countdownTime/60 + " minute" + (countdownTime/60 == 1 ? "" : "s") + ".");
+        }
+        if (countdownTime == 30){
+            arena.sendMessage(ChatColor.BLUE + "Runners will win in 30 seconds");
+        }
+        if (countdownTime <= 10){
             arena.sendMessage(ChatColor.BLUE + "Runners will win in " + countdownTime + " second" + (countdownTime == 1 ? "" : "s") + ".");
         }
         countdownTime--;
