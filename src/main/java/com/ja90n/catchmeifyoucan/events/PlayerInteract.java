@@ -2,6 +2,7 @@ package com.ja90n.catchmeifyoucan.events;
 
 import com.ja90n.catchmeifyoucan.CatchMeIfYouCan;
 import com.ja90n.catchmeifyoucan.instances.Arena;
+import com.ja90n.catchmeifyoucan.runnables.LaunchPlayerRunnable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,13 +28,15 @@ public class PlayerInteract implements Listener {
                 Arena arena = catchMeIfYouCan.getArenaManager().getArena(player);
                 if (arena.getGame().getHiders().contains(player.getUniqueId())){
                     if (arena.getGame().getHiders().contains(target.getUniqueId())){
-                        if (player.isSneaking()){
-                            player.addPassenger(target);
-                        } else {
-                            target.addPassenger(player);
-                        }
+                        target.addPassenger(player);
+                    }
+                } else if (arena.getGame().getSeekers().contains(player.getUniqueId())){
+                    if (arena.getGame().getSeekers().contains(target.getUniqueId())){
+                        target.addPassenger(player);
                     }
                 }
+            } else {
+                target.addPassenger(player);
             }
         }
     }
@@ -41,13 +44,10 @@ public class PlayerInteract implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event){
         Player player = event.getPlayer();
-        if (catchMeIfYouCan.getArenaManager().getArena(player) != null){
-            Arena arena = catchMeIfYouCan.getArenaManager().getArena(player);
-            if (!player.getPassengers().isEmpty()){
-                Entity entity = player.getPassengers().get(0);
-                player.removePassenger(entity);
-                entity.setVelocity(player.getLocation().getDirection().multiply(2).setY(1.5));
-            }
+        if (!player.getPassengers().isEmpty()){
+            Entity entity = player.getPassengers().get(0);
+            player.removePassenger(entity);
+            new LaunchPlayerRunnable(catchMeIfYouCan,player.getLocation().getDirection().multiply(1.5).setY(1.2),entity);
         }
     }
 

@@ -1,14 +1,19 @@
 package com.ja90n.catchmeifyoucan.commands;
 
+import com.google.common.base.Charsets;
 import com.ja90n.catchmeifyoucan.CatchMeIfYouCan;
+import com.ja90n.catchmeifyoucan.GameState;
 import com.ja90n.catchmeifyoucan.instances.Arena;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.UUID;
 
 public class MainCommand implements CommandExecutor {
@@ -72,6 +77,9 @@ public class MainCommand implements CommandExecutor {
                                 }
                             }
                             break;
+                        case "reload":
+
+                            break;
                         default:
                             helpCommand(player);
                             break;
@@ -82,8 +90,12 @@ public class MainCommand implements CommandExecutor {
                         if (catchMeIfYouCan.getArenaManager().getArena(player) != null){
                             player.sendMessage(ChatColor.RED + "You are already in a arena!");
                         } else {
-                            catchMeIfYouCan.getArenaManager().getArena(args[1]).addPlayer(player);
-                            player.sendMessage(ChatColor.RED + "You have joined the game!");
+                            if (!catchMeIfYouCan.getArenaManager().getArena(args[1]).getGameState().equals(GameState.LIVE)){
+                                catchMeIfYouCan.getArenaManager().getArena(args[1]).addPlayer(player);
+                                player.sendMessage(ChatColor.BLUE + "You have joined the game!");
+                            } else {
+                                player.sendMessage(ChatColor.RED + "The game is already active!");
+                            }
                         }
                     } else {
                         helpCommand(player);

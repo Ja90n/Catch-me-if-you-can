@@ -1,5 +1,6 @@
 package com.ja90n.catchmeifyoucan.utils;
 
+import com.ja90n.catchmeifyoucan.CatchMeIfYouCan;
 import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -13,7 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SetupPlayerUtil {
-    public SetupPlayerUtil(Player player, String team){
+    public SetupPlayerUtil(Player player, String team, CatchMeIfYouCan catchMeIfYouCan){
         player.closeInventory();
         player.getInventory().clear();
         player.setGameMode(GameMode.ADVENTURE);
@@ -101,7 +102,7 @@ public class SetupPlayerUtil {
             player.getInventory().getBoots().setItemMeta(leatherArmorMeta);
 
             //Potion
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,200,2));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,20*catchMeIfYouCan.getConfigManager().getSeekerWaitTime(),2));
             player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,999999999,1,false,false));
         }
     }

@@ -4,6 +4,7 @@ import com.ja90n.catchmeifyoucan.CatchMeIfYouCan;
 import com.ja90n.catchmeifyoucan.GameState;
 import com.ja90n.catchmeifyoucan.runnables.RunnerWinCountdownRunnable;
 import com.ja90n.catchmeifyoucan.runnables.StartCountdownRunnable;
+import com.ja90n.catchmeifyoucan.utils.WinCheckUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
@@ -51,6 +52,7 @@ public class Arena {
                 player.setFlying(false);
                 player.removePotionEffect(PotionEffectType.SPEED);
                 player.removePotionEffect(PotionEffectType.INVISIBILITY);
+                player.removePotionEffect(PotionEffectType.WEAKNESS);
             }
             game.getShowHidersRunnable().cancel();
             game.ResetRunnerWinCountdownRunnable();
@@ -80,33 +82,22 @@ public class Arena {
 
     public void removePlayer(Player player){
         players.remove(player.getUniqueId());
-        player.setGameMode(GameMode.SURVIVAL);
         player.getInventory().clear();
-        player.teleport(catchMeIfYouCan.getConfigManager().getLobbySpawn(id));
-        player.sendTitle("", "");
+        player.getEnderChest().clear();
+        player.setInvisible(false);
+        player.setInvulnerable(false);
+        player.setAllowFlight(false);
+        player.setFlying(false);
+        player.removePotionEffect(PotionEffectType.SPEED);
+        player.removePotionEffect(PotionEffectType.INVISIBILITY);
+        player.setGameMode(GameMode.ADVENTURE);
+        player.teleport(catchMeIfYouCan.getConfigManager().getSpawn());
+        player.sendTitle(" ", " ");
 
         game.getTeams().remove(player.getUniqueId());
 
         if (gameState == GameState.LIVE){
-            if (game.getHiders().contains(player.getUniqueId())){
-                int hinderAmount = 0;
-                for (UUID uuid : getGame().getTeams().keySet()){
-                    if (getGame().getTeams().get(uuid).equals("hider")){
-                        hinderAmount++;
-                    }
-                }
-                if (hinderAmount <= 0) {
-                    sendTitle(ChatColor.WHITE.toString() + ChatColor.BOLD + player.getDisplayName() + ChatColor.LIGHT_PURPLE + " has won the game!", ChatColor.GRAY + "Thank you for playing!");
-                    stopGame();
-                    return;
-                }
-            } else if (game.getSeekers().contains(player.getUniqueId())){
-                if (game.getSeekers().size() == 0){
-                    sendMessage(ChatColor.RED + "All seekers have left so the game is stopped!");
-                    stopGame();
-                    return;
-                }
-            }
+            new WinCheckUtil(this);
         }
 
         if (gameState == GameState.COUNTDOWN && players.size() < catchMeIfYouCan.getConfigManager().getRequiredPlayers()){

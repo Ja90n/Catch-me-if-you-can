@@ -23,9 +23,9 @@ public class MainCommandTabCompleter implements TabCompleter {
         switch (args.length) {
             case 1:
                 list.clear();
-                list.add("help");
                 list.add("join");
                 list.add("leave");
+                list.add("help");
                 list.add("list");
                 list.add("start");
                 list.add("stop");

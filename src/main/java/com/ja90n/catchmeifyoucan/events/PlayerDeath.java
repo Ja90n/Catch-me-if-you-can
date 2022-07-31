@@ -7,12 +7,15 @@ import com.ja90n.catchmeifyoucan.runnables.InstantRespawnRunnable;
 import com.ja90n.catchmeifyoucan.utils.SetupPlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.UUID;
 
@@ -37,13 +40,7 @@ public class PlayerDeath implements Listener {
                 } else if (arena.getGame().getTeams().get(player.getUniqueId()).equals("hider")) {
                     arena.getGame().getTeams().remove(player.getUniqueId());
                     arena.getGame().getTeams().put(player.getUniqueId(),"spectator");
-                    int hinderAmount = 0;
-                    for (UUID uuid : arena.getGame().getTeams().keySet()){
-                        if (arena.getGame().getTeams().get(uuid).equals("hider")){
-                            hinderAmount++;
-                        }
-                    }
-                    if (hinderAmount <= 0){
+                    if (arena.getGame().getHiders().size() <= 0){
                         arena.sendMessage(ChatColor.DARK_RED + "The catcher " + ChatColor.WHITE + Bukkit.getPlayer(arena.getGame().getSeekers().get(0)).getDisplayName() + ChatColor.DARK_RED + " has won the game!");
                         arena.sendTitle(ChatColor.DARK_RED + "The catcher " + ChatColor.WHITE + Bukkit.getPlayer(arena.getGame().getSeekers().get(0)).getDisplayName() + ChatColor.DARK_RED + " has won the game!",ChatColor.GRAY + "Thank you for playing!");
                         arena.stopGame();
@@ -70,22 +67,19 @@ public class PlayerDeath implements Listener {
             Arena arena = catchMeIfYouCan.getArenaManager().getArena(player);
             if (arena.getGameState().equals(GameState.LIVE)){
                 if (arena.getGame().getTeams().get(player.getUniqueId()).equals("seeker")){
-                    new SetupPlayerUtil(player,"seeker");
+                    new SetupPlayerUtil(player,"seeker",catchMeIfYouCan);
                     event.setRespawnLocation(catchMeIfYouCan.getConfigManager().getSeekerSpawn(arena.getId()));
                 } else if (arena.getGame().getTeams().get(player.getUniqueId()).equals("spectator")){
                     event.setRespawnLocation(event.getPlayer().getLocation());
-                    player.setInvisible(true);
-                    player.setInvulnerable(true);
-                    player.setAllowFlight(true);
-                    player.setFlying(true);
+                    player.setGameMode(GameMode.SPECTATOR);
                 } else {
-                    event.setRespawnLocation(catchMeIfYouCan.getConfigManager().getLobbySpawn(catchMeIfYouCan.getArenaManager().getArena(player).getId()));
+                    event.setRespawnLocation(catchMeIfYouCan.getConfigManager().getSpawn());
                 }
             } else {
                 event.setRespawnLocation(catchMeIfYouCan.getConfigManager().getLobbySpawn(catchMeIfYouCan.getArenaManager().getArena(player).getId()));
             }
         } else {
-            event.setRespawnLocation(new Location(Bukkit.getWorld("world"),0,1,0));
+            event.setRespawnLocation(catchMeIfYouCan.getConfigManager().getSpawn());
         }
     }
 }

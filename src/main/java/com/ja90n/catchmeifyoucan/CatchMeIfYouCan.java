@@ -32,6 +32,7 @@ public final class CatchMeIfYouCan extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerQuit(this),this);
         getServer().getPluginManager().registerEvents(new PlayerInteract(this),this);
         getServer().getPluginManager().registerEvents(new PlayerInventory(this),this);
+        getServer().getPluginManager().registerEvents(new PlayerHunger(),this);
     }
 
     @Override

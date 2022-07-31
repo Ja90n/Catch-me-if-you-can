@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
 
@@ -19,7 +20,7 @@ public class EntityDamage implements Listener {
     }
 
     @EventHandler
-    public void onDamage(EntityDamageByEntityEvent event){
+    public void onEntityDamage(EntityDamageByEntityEvent event){
         if (event.getEntity() instanceof Player){
             Player player = (Player) event.getEntity();
             if (catchMeIfYouCan.getArenaManager().getArena(player) != null){
@@ -33,11 +34,23 @@ public class EntityDamage implements Listener {
                         if (arena.getGame().getSeekers().contains(event.getDamager().getUniqueId())){
                             event.setCancelled(true);
                         }
+                    } else {
+                        event.setCancelled(true);
+                        event.setDamage(0);
                     }
                 } else {
                     event.setCancelled(true);
                 }
+            } else {
+                event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent event){
+        if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL)){
+            event.setDamage(event.getDamage()/3);
         }
     }
 

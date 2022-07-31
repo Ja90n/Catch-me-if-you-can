@@ -37,16 +37,17 @@ public class Game {
 
     public void start() {
         int random = ThreadLocalRandom.current().nextInt(0,arena.getPlayers().size());
+
         for (UUID uuid : arena.getPlayers()){
             Player player = Bukkit.getPlayer(uuid);
             player.removePotionEffect(PotionEffectType.SPEED);
             if (arena.getPlayers().indexOf(uuid) == random){
                 teams.put(uuid,"seeker");
-                new SetupPlayerUtil(player,"seeker");
+                new SetupPlayerUtil(player,"seeker",catchMeIfYouCan);
                 new SeekerStartCountdownRunnable(catchMeIfYouCan,player,arena);
             } else {
                 teams.put(uuid,"hider");
-                new SetupPlayerUtil(player,"hider");
+                new SetupPlayerUtil(player,"hider",catchMeIfYouCan);
                 player.teleport(catchMeIfYouCan.getConfigManager().getHiderSpawn(arena.getId()));
                 player.sendMessage(ChatColor.BLUE + "You are a runner!");
                 player.sendMessage(ChatColor.BLUE + "Game has been started! You have " + catchMeIfYouCan.getConfigManager().getSeekerWaitTime()  + " seconds to run away!");
@@ -97,6 +98,17 @@ public class Game {
         }
         return hiders;
     }
+
+    public List<UUID> getSpectators() {
+        List<UUID> hiders = new ArrayList<>();
+        for (UUID uuid : teams.keySet()){
+            if (teams.get(uuid).equals("spectator")){
+                hiders.add(uuid);
+            }
+        }
+        return hiders;
+    }
+
 
     public RunnerWinCountdownRunnable getRunnerWinCountdownRunnable() {
         return runnerWinCountdownRunnable;

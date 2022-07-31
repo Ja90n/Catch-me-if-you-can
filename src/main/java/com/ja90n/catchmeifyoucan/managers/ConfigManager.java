@@ -44,6 +44,16 @@ public class ConfigManager {
                 (float) config.getDouble("arenas." + id + ".seeker-spawn.pitch"));
     }
 
+    public Location getSpawn(){
+        return new Location(
+                Bukkit.getWorld(config.getString("spawn.world")),
+                config.getDouble("spawn.x"),
+                config.getDouble("spawn.y"),
+                config.getDouble("spawn.z"),
+                (float) config.getDouble("spawn.yaw"),
+                (float) config.getDouble("spawn.pitch"));
+    }
+
     public int getRequiredPlayers(){
         return config.getInt("required-players");
     }

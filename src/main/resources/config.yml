@@ -3,14 +3,22 @@ seeker-wait-time: 10
 countdown-time: 15
 match-time: 300
 
+spawn:
+  world: 'world'
+  x: 0.0
+  y: 1.0
+  z: 0.0
+  yaw: 0.0
+  pitch: 0.0
+
 arenas:
   0:
     name: 'skeld'
     lobby-spawn:
-      world: 'skeld'
-      x: 28.0
-      y: 18.0
-      z: 109.0
+      world: 'world'
+      x: 0.5
+      y: 1.0
+      z: -14.5
       yaw: 0.0
       pitch: 0.0
     hider-spawn:
