@@ -1,7 +1,10 @@
 required-players: 2
+
+#In seconds
 seeker-wait-time: 10
 countdown-time: 15
 match-time: 300
+hider-glow-time: 30
 
 spawn:
   world: 'world'

@@ -47,7 +47,7 @@ public class MainCommand implements CommandExecutor {
                         case "list":
                             player.sendMessage(ChatColor.BLUE + "These are the available arenas:");
                             for (Arena arena : catchMeIfYouCan.getArenaManager().getArenas()){
-                                player.sendMessage(ChatColor.BLUE + "- " + arena.getName() + " (" + arena.getId() + ")" + ChatColor.GRAY + "(Game state: " + arena.getGameState() + ")");
+                                player.sendMessage(ChatColor.BLUE + "- " + arena.getName() + ChatColor.GRAY + " (Game state: " + arena.getGameState() + ")");
                             }
                             break;
                         case "start":

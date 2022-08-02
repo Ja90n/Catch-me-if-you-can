@@ -2,8 +2,12 @@ package com.ja90n.catchmeifyoucan.runnables;
 
 import com.ja90n.catchmeifyoucan.CatchMeIfYouCan;
 import com.ja90n.catchmeifyoucan.instances.Arena;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class RunnerWinCountdownRunnable extends BukkitRunnable {
 
@@ -23,6 +27,24 @@ public class RunnerWinCountdownRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
+        for (UUID uuid : arena.getPlayers()){
+            Player player = Bukkit.getPlayer(uuid);
+            if (countdownTime >= 60){
+                int minutes = countdownTime/60;
+                int seconds = countdownTime - (60*minutes);
+                if (seconds <= 9){
+                    player.getScoreboard().getTeam("TimeToWin").setSuffix(ChatColor.WHITE.toString() + minutes + ":0" + seconds);
+                } else {
+                    player.getScoreboard().getTeam("TimeToWin").setSuffix(ChatColor.WHITE.toString() + minutes + ":" + seconds);
+                }
+            } else {
+                if (countdownTime <= 9){
+                    player.getScoreboard().getTeam("TimeToWin").setSuffix(ChatColor.WHITE.toString() + "00:0" + countdownTime);
+                } else {
+                    player.getScoreboard().getTeam("TimeToWin").setSuffix(ChatColor.WHITE.toString() + "00:" + countdownTime);
+                }
+            }
+        }
         if (countdownTime == 0){
             arena.sendMessage(ChatColor.BLUE + "Runners have won the game!");
             arena.sendTitle(ChatColor.BLUE + "Runners have won the game!",ChatColor.GRAY + "Thank you for playing!");

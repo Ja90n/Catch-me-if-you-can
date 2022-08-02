@@ -65,4 +65,8 @@ public class ConfigManager {
     public int getCountdownTime(){
         return config.getInt("countdown-time");
     }
+
+    public int getGlowHiderTime(){
+        return config.getInt("hider-glow-time");
+    }
 }

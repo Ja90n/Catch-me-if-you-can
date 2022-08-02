@@ -1,15 +1,14 @@
 package com.ja90n.catchmeifyoucan.utils;
 
 import com.ja90n.catchmeifyoucan.CatchMeIfYouCan;
-import org.bukkit.Color;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.*;
 
 import java.util.concurrent.ThreadLocalRandom;
 

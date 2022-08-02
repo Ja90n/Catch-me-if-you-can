@@ -4,11 +4,11 @@ import com.ja90n.catchmeifyoucan.CatchMeIfYouCan;
 import com.ja90n.catchmeifyoucan.GameState;
 import com.ja90n.catchmeifyoucan.runnables.RunnerWinCountdownRunnable;
 import com.ja90n.catchmeifyoucan.runnables.SeekerStartCountdownRunnable;
-import com.ja90n.catchmeifyoucan.runnables.ShowHidersRunnable;
+import com.ja90n.catchmeifyoucan.runnables.GlowHidersRunnable;
+import com.ja90n.catchmeifyoucan.utils.SetScoreboard;
 import com.ja90n.catchmeifyoucan.utils.SetupPlayerUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
@@ -23,14 +23,14 @@ public class Game {
     private Arena arena;
     private HashMap<UUID,String> teams;
     private List<UUID> seekerCountdown;
-    private ShowHidersRunnable showHidersRunnable;
+    private GlowHidersRunnable showHidersRunnable;
     private RunnerWinCountdownRunnable runnerWinCountdownRunnable;
 
     public Game(CatchMeIfYouCan catchMeIfYouCan, Arena arena){
         this.catchMeIfYouCan = catchMeIfYouCan;
         this.arena = arena;
         this.runnerWinCountdownRunnable = new RunnerWinCountdownRunnable(catchMeIfYouCan,arena);
-        this.showHidersRunnable = new ShowHidersRunnable(catchMeIfYouCan,arena);
+        this.showHidersRunnable = new GlowHidersRunnable(catchMeIfYouCan,arena);
         seekerCountdown = new ArrayList<>();
         teams = new HashMap<>();
     }
@@ -55,6 +55,9 @@ public class Game {
             }
             player.setHealth(20);
             player.setGameMode(GameMode.ADVENTURE);
+        }
+        for (UUID uuid : arena.getPlayers()){
+            new SetScoreboard(Bukkit.getPlayer(uuid),"game",catchMeIfYouCan);
         }
         arena.getWorld().setTime(0);
         arena.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
@@ -119,7 +122,7 @@ public class Game {
         runnerWinCountdownRunnable = new RunnerWinCountdownRunnable(catchMeIfYouCan,arena);
     }
 
-    public ShowHidersRunnable getShowHidersRunnable() {
+    public GlowHidersRunnable getShowHidersRunnable() {
         return showHidersRunnable;
     }
 }

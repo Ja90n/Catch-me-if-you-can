@@ -26,7 +26,7 @@ public class SeekerStartCountdownRunnable extends BukkitRunnable {
         player.sendTitle(ChatColor.LIGHT_PURPLE + "Game has been started!", ChatColor.GRAY + "You have to wait " + catchMeIfYouCan.getConfigManager().getSeekerWaitTime() + " seconds to be released!");
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,20 * catchMeIfYouCan.getConfigManager().getSeekerWaitTime(),10,false,false));
         arena.getGame().toggleRunnableCheck(player,true);
-        runTaskTimer(catchMeIfYouCan,0,20);
+        runTaskTimer(catchMeIfYouCan,2,20);
     }
 
     @Override

@@ -4,6 +4,8 @@ import com.ja90n.catchmeifyoucan.CatchMeIfYouCan;
 import com.ja90n.catchmeifyoucan.GameState;
 import com.ja90n.catchmeifyoucan.runnables.RunnerWinCountdownRunnable;
 import com.ja90n.catchmeifyoucan.runnables.StartCountdownRunnable;
+import com.ja90n.catchmeifyoucan.utils.ReloadScoreboard;
+import com.ja90n.catchmeifyoucan.utils.SetScoreboard;
 import com.ja90n.catchmeifyoucan.utils.WinCheckUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -39,7 +41,8 @@ public class Arena {
 
     public void stopGame(){
         if (gameState.equals(GameState.LIVE)){
-            Location location = catchMeIfYouCan.getConfigManager().getLobbySpawn(id);
+            Location location = catchMeIfYouCan.getConfigManager().getSpawn();
+            ArrayList<Player> arrayList = new ArrayList<>();
             for (UUID uuid : players){
                 Player player = Bukkit.getPlayer(uuid);
                 player.teleport(location);
@@ -53,10 +56,17 @@ public class Arena {
                 player.removePotionEffect(PotionEffectType.SPEED);
                 player.removePotionEffect(PotionEffectType.INVISIBILITY);
                 player.removePotionEffect(PotionEffectType.WEAKNESS);
+                Bukkit.getConsoleSender().sendMessage("Removed playter " + player.getDisplayName());
+                arrayList.add(player);
             }
+            players.clear();
+            for (Player player : arrayList){
+                new SetScoreboard(player,"lobby",catchMeIfYouCan);
+            }
+            arrayList.clear();
+            Bukkit.getConsoleSender().sendMessage("Removed all players");
             game.getShowHidersRunnable().cancel();
             game.ResetRunnerWinCountdownRunnable();
-            players.clear();
         }
         sendTitle(" ", " ");
         gameState = GameState.RECRUITING;
@@ -78,6 +88,8 @@ public class Arena {
         if (gameState.equals(GameState.RECRUITING) && players.size() >= catchMeIfYouCan.getConfigManager().getRequiredPlayers()){
             startCountdownRunnable.start();
         }
+
+        new ReloadScoreboard(catchMeIfYouCan,player);
     }
 
     public void removePlayer(Player player){
@@ -95,6 +107,9 @@ public class Arena {
         player.sendTitle(" ", " ");
 
         game.getTeams().remove(player.getUniqueId());
+
+        new ReloadScoreboard(catchMeIfYouCan,player);
+        new SetScoreboard(player,"lobby",catchMeIfYouCan);
 
         if (gameState == GameState.LIVE){
             new WinCheckUtil(this);

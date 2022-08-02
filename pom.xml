@@ -6,7 +6,7 @@
 
     <groupId>com.Ja90n</groupId>
     <artifactId>catch-me-if-you-can</artifactId>
-    <version>v0.2.1</version>
+    <version>0.2.2</version>
     <packaging>jar</packaging>
 
     <name>Catch-Me-If-You-Can</name>
