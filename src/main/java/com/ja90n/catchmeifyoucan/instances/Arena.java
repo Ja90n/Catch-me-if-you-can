@@ -42,7 +42,7 @@ public class Arena {
     public void stopGame(){
         if (gameState.equals(GameState.LIVE)){
             Location location = catchMeIfYouCan.getConfigManager().getSpawn();
-            ArrayList<Player> arrayList = new ArrayList<>();
+            ArrayList<Player> players1 = new ArrayList<>();
             for (UUID uuid : players){
                 Player player = Bukkit.getPlayer(uuid);
                 player.teleport(location);
@@ -56,15 +56,13 @@ public class Arena {
                 player.removePotionEffect(PotionEffectType.SPEED);
                 player.removePotionEffect(PotionEffectType.INVISIBILITY);
                 player.removePotionEffect(PotionEffectType.WEAKNESS);
-                Bukkit.getConsoleSender().sendMessage("Removed playter " + player.getDisplayName());
-                arrayList.add(player);
+                players1.add(player);
             }
             players.clear();
-            for (Player player : arrayList){
+            for (Player player : players1){
                 new SetScoreboard(player,"lobby",catchMeIfYouCan);
             }
-            arrayList.clear();
-            Bukkit.getConsoleSender().sendMessage("Removed all players");
+            players1.clear();
             game.getShowHidersRunnable().cancel();
             game.ResetRunnerWinCountdownRunnable();
         }
