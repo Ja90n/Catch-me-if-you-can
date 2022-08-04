@@ -44,6 +44,8 @@ public class EntityDamage implements Listener {
             } else {
                 event.setCancelled(true);
             }
+        } else {
+
         }
     }
 

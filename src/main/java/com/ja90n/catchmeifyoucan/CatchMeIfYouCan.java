@@ -2,15 +2,19 @@ package com.ja90n.catchmeifyoucan;
 
 import com.ja90n.catchmeifyoucan.commands.MainCommand;
 import com.ja90n.catchmeifyoucan.commands.MainCommandTabCompleter;
+import com.ja90n.catchmeifyoucan.commands.PartyCommand;
+import com.ja90n.catchmeifyoucan.commands.PartyCommandTabCompleter;
 import com.ja90n.catchmeifyoucan.events.*;
 import com.ja90n.catchmeifyoucan.managers.ArenaManager;
 import com.ja90n.catchmeifyoucan.managers.ConfigManager;
+import com.ja90n.catchmeifyoucan.managers.PartyManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CatchMeIfYouCan extends JavaPlugin {
 
     private ConfigManager configManager;
     private ArenaManager arenaManager;
+    private PartyManager partyManager;
 
     @Override
     public void onEnable() {
@@ -19,12 +23,19 @@ public final class CatchMeIfYouCan extends JavaPlugin {
 
         configManager = new ConfigManager(this);
         arenaManager = new ArenaManager(this);
+        partyManager = new PartyManager(this);
 
         getCommand("cmiyc").setExecutor(new MainCommand(this));
         getCommand("cmiyc").setTabCompleter(new MainCommandTabCompleter(this));
 
         getCommand("catch").setExecutor(new MainCommand(this));
         getCommand("catch").setTabCompleter(new MainCommandTabCompleter(this));
+
+        getCommand("party").setExecutor(new PartyCommand(this));
+        getCommand("party").setTabCompleter(new PartyCommandTabCompleter(this));
+
+        getCommand("p").setExecutor(new PartyCommand(this));
+        getCommand("p").setTabCompleter(new PartyCommandTabCompleter(this));
 
         getServer().getPluginManager().registerEvents(new PlayerMove(this),this);
         getServer().getPluginManager().registerEvents(new PlayerDeath(this),this);
@@ -43,6 +54,10 @@ public final class CatchMeIfYouCan extends JavaPlugin {
 
     public ConfigManager getConfigManager() {
         return configManager;
+    }
+
+    public PartyManager getPartyManager() {
+        return partyManager;
     }
 
     public ArenaManager getArenaManager() {

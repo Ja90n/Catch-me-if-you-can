@@ -38,8 +38,17 @@ public class MainCommand implements CommandExecutor {
                     switch (args[0]){
                         case "leave":
                             if (catchMeIfYouCan.getArenaManager().getArena(player) != null){
-                                catchMeIfYouCan.getArenaManager().getArena(player).removePlayer(player);
-                                player.sendMessage(ChatColor.RED + "You have left the game!");
+                                if (catchMeIfYouCan.getPartyManager().getParty(player) == null){
+                                    catchMeIfYouCan.getArenaManager().getArena(player).removePlayer(player);
+                                    player.sendMessage(ChatColor.RED + "You have left the game!");
+                                } else {
+                                    if (catchMeIfYouCan.getPartyManager().getParty(player).getPartyLeader().equals(player.getUniqueId())){
+                                        catchMeIfYouCan.getPartyManager().getParty(player).leaveGame(catchMeIfYouCan.getArenaManager().getArena(player));
+                                    } else {
+                                        catchMeIfYouCan.getArenaManager().getArena(player).removePlayer(player);
+                                        player.sendMessage(ChatColor.RED + "You have left the game without your party!");
+                                    }
+                                }
                             } else {
                                 player.sendMessage(ChatColor.RED + "You are not in a game!");
                             }
@@ -91,8 +100,16 @@ public class MainCommand implements CommandExecutor {
                             player.sendMessage(ChatColor.RED + "You are already in a arena!");
                         } else {
                             if (!catchMeIfYouCan.getArenaManager().getArena(args[1]).getGameState().equals(GameState.LIVE)){
-                                catchMeIfYouCan.getArenaManager().getArena(args[1]).addPlayer(player);
-                                player.sendMessage(ChatColor.BLUE + "You have joined the game!");
+                                if (catchMeIfYouCan.getPartyManager().getParty(player) == null){
+                                    catchMeIfYouCan.getArenaManager().getArena(args[1]).addPlayer(player);
+                                    player.sendMessage(ChatColor.BLUE + "You have joined the game!");
+                                } else {
+                                    if (catchMeIfYouCan.getPartyManager().getParty(player).getPartyLeader().equals(player.getUniqueId())){
+                                        catchMeIfYouCan.getPartyManager().getParty(player).joinGame(catchMeIfYouCan.getArenaManager().getArena(args[1]));
+                                    } else {
+                                        player.sendMessage(ChatColor.RED + "You can not join the game because you are not the party leader!");
+                                    }
+                                }
                             } else {
                                 player.sendMessage(ChatColor.RED + "The game is already active!");
                             }
